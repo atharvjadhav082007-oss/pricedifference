@@ -46,21 +46,17 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-// Connect to MongoDB then start server
-mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    console.log('✅ Connected to MongoDB:', MONGODB_URI);
-    app.listen(PORT, () => {
-      console.log(`✅ Server running on http://localhost:${PORT}`);
-      // Start background jobs
-      startPriceScraper();
-      startAlertChecker();
-    });
-  })
-  .catch((err) => {
-    console.error('❌ MongoDB connection failed:', err.message);
-    process.exit(1);
-  });
+// Connect using the environment variable you set up on Render
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('✅ PriceRadar successfully connected to MongoDB Atlas!'))
+  .catch((err) => console.error('❌ Database connection error:', err.message));
+
+// Render injects its own PORT variable automatically
+app.listen(PORT, () => {
+  console.log(`✅ Server is running smoothly on port ${PORT}`);
+  // Start background jobs
+  startPriceScraper();
+  startAlertChecker();
+});
 
 module.exports = app;
