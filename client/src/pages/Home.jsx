@@ -3,6 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import CategoryPills from '../components/CategoryPills';
 import ProductCard from '../components/ProductCard';
+import AdBanner from '../components/AdBanner';
+import BrowseDirectly from '../components/BrowseDirectly';
+import CuratedSection from '../components/CuratedSection';
+import BottomNav from '../components/BottomNav';
 import { getProducts } from '../api';
 
 function ProductCardSkeleton() {
@@ -58,6 +62,8 @@ export default function Home() {
     <>
       <Navbar />
       <div className="page-content">
+        <AdBanner />
+        
         {/* Hero */}
         <section className="hero" id="hero-section">
           <div className="hero-badge">COMPARE PRICES ACROSS 10+ PLATFORMS</div>
@@ -78,9 +84,15 @@ export default function Home() {
               </div>
             ))}
           </div>
-
-          <CategoryPills active={category} onChange={setCategory} />
         </section>
+
+        <BrowseDirectly />
+        
+        <CuratedSection />
+
+        <div style={{ padding: '0 20px' }}>
+          <CategoryPills active={category} onChange={setCategory} />
+        </div>
 
         {/* Trending section */}
         <section className="section" id="trending-section">
@@ -114,6 +126,7 @@ export default function Home() {
           </div>
         </section>
       </div>
+      <BottomNav />
     </>
   );
 }
