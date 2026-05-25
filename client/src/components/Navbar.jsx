@@ -75,6 +75,17 @@ export default function Navbar({ onSearch }) {
             </svg>
           </button>
         </Link>
+
+        {/* Profile Link Button */}
+        <Link to="/profile" id="navbar-profile-btn" title="My Profile">
+          <button className="icon-btn" aria-label="My Profile">
+            {/* User icon */}
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </button>
+        </Link>
       </div>
     </nav>
   );
