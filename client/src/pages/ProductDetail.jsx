@@ -6,6 +6,7 @@ import PlatformCard from '../components/PlatformCard';
 import PriceHistoryChart from '../components/PriceHistoryChart';
 import AlertForm from '../components/AlertForm';
 import { getProduct } from '../api';
+import { useSavedItems } from '../context/SavedItemsContext';
 
 const CATEGORY_EMOJI = {
   electronics: '💻',
@@ -45,6 +46,9 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+  const { isInWishlist, isInFavorite, toggleWishlist, toggleFavorite } = useSavedItems();
+  const isWishlisted = isInWishlist(id);
+  const isFavorited = isInFavorite(id);
 
   useEffect(() => {
     setLoading(true);
@@ -102,6 +106,26 @@ export default function ProductDetail() {
                 </p>
               )}
               <p className="detail-desc">{description}</p>
+
+              {/* Action Buttons */}
+              <div style={{ display: 'flex', gap: 10, margin: '12px 0 16px 0', flexWrap: 'wrap' }}>
+                <button
+                  className={`detail-action-btn detail-wishlist-btn ${isWishlisted ? 'active' : ''}`}
+                  onClick={() => toggleWishlist(product)}
+                  aria-label={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+                >
+                  <span className="btn-icon">♥</span>
+                  {isWishlisted ? 'In Wishlist' : 'Add to Wishlist'}
+                </button>
+                <button
+                  className={`detail-action-btn detail-favorite-btn ${isFavorited ? 'active' : ''}`}
+                  onClick={() => toggleFavorite(product)}
+                  aria-label={isFavorited ? "Remove from Favorites" : "Add to Favorites"}
+                >
+                  <span className="btn-icon">★</span>
+                  {isFavorited ? 'In Favorites' : 'Add to Favorites'}
+                </button>
+              </div>
 
               {/* Rating */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>

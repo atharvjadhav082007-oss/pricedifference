@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useSavedItems } from '../context/SavedItemsContext';
 
 const CATEGORY_EMOJI = {
   electronics: '💻',
@@ -23,6 +24,8 @@ function StarRating({ rating }) {
 
 export default function ProductCard({ product }) {
   const navigate = useNavigate();
+  const { isInWishlist, isInFavorite, toggleWishlist, toggleFavorite } = useSavedItems();
+
   const {
     _id,
     name,
@@ -33,6 +36,9 @@ export default function ProductCard({ product }) {
     bestPlatform,
     specs,
   } = product;
+
+  const isWishlisted = isInWishlist(_id);
+  const isFavorited = isInFavorite(_id);
 
   const mrp = specs?.mrp || 0;
   const price = bestPrice || mrp;
@@ -60,6 +66,30 @@ export default function ProductCard({ product }) {
         <span className="platform-badge" style={{ textTransform: 'capitalize' }}>
           {platform}
         </span>
+
+        {/* Wishlist & Favorites Toggle Buttons */}
+        <div className="card-actions">
+          <button 
+            className={`card-action-btn wishlist-btn ${isWishlisted ? 'active' : ''}`}
+            onClick={(e) => { 
+              e.stopPropagation(); 
+              toggleWishlist(product); 
+            }}
+            aria-label={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+          >
+            ♥
+          </button>
+          <button 
+            className={`card-action-btn favorite-btn ${isFavorited ? 'active' : ''}`}
+            onClick={(e) => { 
+              e.stopPropagation(); 
+              toggleFavorite(product); 
+            }}
+            aria-label={isFavorited ? "Remove from Favorites" : "Add to Favorites"}
+          >
+            ★
+          </button>
+        </div>
       </div>
 
       <div className="card-body">

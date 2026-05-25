@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSavedItems } from '../context/SavedItemsContext';
 
 export default function Navbar({ onSearch }) {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
   const timer = useRef(null);
+  const { wishlist, favorites, openDrawer } = useSavedItems();
 
   const handleChange = (e) => {
     const val = e.target.value;
@@ -40,6 +42,30 @@ export default function Navbar({ onSearch }) {
       </div>
 
       <div className="navbar-actions">
+        {/* Wishlist Button */}
+        <button 
+          className="icon-btn action-badge-btn" 
+          onClick={() => openDrawer('wishlist')} 
+          title="Wishlist"
+          aria-label="Wishlist"
+          style={{ position: 'relative' }}
+        >
+          <span style={{ fontSize: '16px', color: wishlist.length > 0 ? 'var(--red)' : 'inherit' }}>♥</span>
+          {wishlist.length > 0 && <span className="count-badge pink">{wishlist.length}</span>}
+        </button>
+
+        {/* Favorites Button */}
+        <button 
+          className="icon-btn action-badge-btn" 
+          onClick={() => openDrawer('favorites')} 
+          title="Favorites"
+          aria-label="Favorites"
+          style={{ position: 'relative' }}
+        >
+          <span style={{ fontSize: '16px', color: favorites.length > 0 ? '#eab308' : 'inherit' }}>★</span>
+          {favorites.length > 0 && <span className="count-badge gold">{favorites.length}</span>}
+        </button>
+
         <Link to="/alerts" id="alerts-bell-btn" title="My Alerts">
           <button className="icon-btn" aria-label="Price alerts">
             {/* Bell icon */}
