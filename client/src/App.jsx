@@ -4,6 +4,7 @@ import ProductDetail from './pages/ProductDetail';
 import Compare from './pages/Compare';
 import Alerts from './pages/Alerts';
 import Profile from './pages/Profile';
+import Deals from './pages/Deals';
 import { SavedItemsProvider } from './context/SavedItemsContext';
 import SavedItemsDrawer from './components/SavedItemsDrawer';
 
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/compare/:id" element={<Compare />} />
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/deals" element={<Deals />} />
           <Route path="*" element={
             <div style={{ textAlign: 'center', padding: '100px 20px', color: '#888' }}>
               <div style={{ fontSize: 48, marginBottom: 16 }}>🔍</div>
